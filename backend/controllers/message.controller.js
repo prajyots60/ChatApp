@@ -1,7 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 
-export const sendMessage = async (req,res) => {
+export const sendMessages = async (req,res) => {
     try {
       const {message} = req.body;
       const {id: receiverId} = req.params;
@@ -54,7 +54,7 @@ export const sendMessage = async (req,res) => {
     }
 };
 
-export const getMessage = async (req,res) => {
+export const getMessages = async (req,res) => {
     try {
       const {id: userToChatId} = req.params;
       const senderId = req.user._id;
