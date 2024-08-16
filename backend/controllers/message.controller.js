@@ -1,5 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 export const sendMessages = async (req,res) => {
     try {
@@ -29,17 +31,27 @@ export const sendMessages = async (req,res) => {
         conversation.messages.push(newMessage._id);
       }
 
-
-      // socket io here
-
-
-
       // takes longer time
       // await conversation.save();
       // await newMessage.save();
 
       // runs parallely
       await Promise.all([conversation.save(), newMessage.save()]);
+
+
+      
+
+      // socket io here
+
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if(receiverSocketId){
+
+        //io.to()<>.emit()  is used to send events to a specific client or group of clients
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      }
+
+
+
 
       res.status(201).json(newMessage);
 
