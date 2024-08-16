@@ -23,10 +23,7 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
-//default route
-app.get('/' , (req,res) => {
-    res.send("Hello World , welcome to the server");
-})
+
 
 //middleware
 app.use(express.json());  //parse json data from req.body
